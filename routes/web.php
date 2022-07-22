@@ -37,7 +37,9 @@ Route::middleware([
 
 
     Route::get('/users', function () {
-        $users = User::query()->paginate(15);
+        $users = User::query()
+            ->with('pens')
+            ->paginate(15);
 
         return Inertia::render('Users', [
             'users' => UserResource::collection($users),
@@ -46,8 +48,8 @@ Route::middleware([
 
 
     Route::get('/users/{user}', function (User $user) {
-
         $relatedUsers = User::query()
+            ->with('pens')
             ->whereHas('pens', function ($query) use ($user) {
                 $query->whereIn('type', $user->pens->pluck('type')->toArray());
             })
