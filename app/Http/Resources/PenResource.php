@@ -19,7 +19,7 @@ class PenResource extends JsonResource
             'name' => $this->name,
             'color' => $this->color,
             'size' => $this->size,
-            'user' => new UserResource($this->user),
+            'type' => $this->type
         ];
     }
 }
